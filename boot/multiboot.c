@@ -371,32 +371,23 @@ void boot(void) {
 	}
 
 #define KERNEL_LOAD_START 0x4000000ULL
-        kernel_load_start = (char*)KERNEL_LOAD_START;
+	kernel_load_start = (char*)KERNEL_LOAD_START;
 
-        {
-            EFI_PHYSICAL_ADDRESS addr = KERNEL_LOAD_START;
-            EFI_ALLOCATE_TYPE type = AllocateAnyPages;  // Change to AllocateAnyPages
-            EFI_MEMORY_TYPE memtype = EfiLoaderData;   // Ensure this is correct for your use case
-            UINTN pages = 1024;  // Start with a smaller number of pages (4 MB)
-            EFI_STATUS status = 0;
-
-            // Try to allocate memory in a loop, increasing the number of pages
-            while (pages <= 8192) {
-                status = uefi_call_wrapper(ST->BootServices->AllocatePages, 4, type, memtype, pages, &addr);
-                if (!EFI_ERROR(status)) {
-                    break;  // Successfully allocated memory
-                }
-                pages *= 2;  // Double the number of pages and try again
-            }
-
-            if (EFI_ERROR(status)) {
-                print_("Could not allocate space to load boot payloads: ");
-                print_hex_(status);
-                print_(" ");
-                print_hex_(addr);
-                while (1) {};
-            }
-         }
+	{
+		EFI_PHYSICAL_ADDRESS addr = KERNEL_LOAD_START;
+		EFI_ALLOCATE_TYPE type = AllocateAddress;
+		EFI_MEMORY_TYPE memtype = EfiLoaderData;
+		UINTN pages = 8192;
+		EFI_STATUS status = 0;
+		status = uefi_call_wrapper(ST->BootServices->AllocatePages, 4, type, memtype, pages, &addr);
+		if (EFI_ERROR(status)) {
+			print_("Could not allocate space to load boot payloads: ");
+			print_hex_(status);
+			print_(" ");
+			print_hex_(addr);
+			while (1) {};
+		}
+	}
 
 	unsigned int offset = 0;
 	UINTN bytes = 134217728;
