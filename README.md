@@ -1,5 +1,9 @@
 # ToaruOS
 
+## Disclaimer
+
+This a fork of ToaruOS, not the original. I am currently attempting to get this working on a Toshiba Chromebook 2 but somewhere down the road, a commit broke loading /bin/init which causes a hang. idk what caused it.
+
 ToaruOS is a "complete" operating system for x86-64 PCs and experimental support for ARMv8.
 
 While many independent, hobby, and research OSes aim to experiment with new designs, ToaruOS is intended as an educational resource, providing a representative microcosm of functionality found in major desktop operating systems.
@@ -229,6 +233,6 @@ While I aim to support POSIX interfaces well enough for software to be ported, s
 
 ### Are contributions accepted?
 
-ToaruOS is a personal project, not a community project. Contributions in the form of code should be discussed in advance. Ports and other work outside of the repo, however, are a great way to help out.
+(This fork of) ToaruOS is a ~~~personal project, not a~~~ community project. Contributions in the form of code and ~~~should be discussed in advance.~~~ Ports ~~~and other work outside of the repo, however,~~~ are a great way to help out.
 
 You can also help by contributing to [Kuroko](https://github.com/kuroko-lang/kuroko) - which is part of why it's kept as a separate repository.
